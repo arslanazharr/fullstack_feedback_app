@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.rr--has-stroke .rr--off .rr--svg {
+  stroke: #c002c0;
+}
+
+.rr--has-stroke .rr--on .rr--svg {
+  stroke: #c002c0;
+}
+
+.rr--on .rr--svg {
+  fill: #c002c0;
+}
+
+.rr--off .rr--svg {
+  fill: #e9d5ff;
+}
