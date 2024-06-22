@@ -11,7 +11,7 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import UpdateReview from "./UpdateReview";
 import DeleteForm from "./DeleteForm";
 const ReviewList = (props) => {
-  const { movieName, movieReview, movieRating } = props;
+  const { movieName, movieReview, movieRating, id } = props;
   const [openActiionButtons, setOpenActiionButtons] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [openEditDialog, setOpenEditDialog] = useState(false);
@@ -26,7 +26,7 @@ const ReviewList = (props) => {
     setAnchorEl(null);
   };
   return (
-    <div className="xl:col-span-3 lg:col-span-4 md:col-span-5 sm:col-span-6 col-span-12 border border-[#c002c0] rounded-lg min-h-[100px] p-4 shadow-xl relative">
+    <div className="xl:col-span-3 lg:col-span-4 md:col-span-6 sm:col-span-6 col-span-12 border border-[#c002c0] rounded-lg min-h-[100px] p-4 shadow-xl relative">
       <MoreHorizIcon
         onClick={handleOpenActionButtons}
         color="primary"
@@ -88,6 +88,7 @@ const ReviewList = (props) => {
         openEditDialog={openEditDialog}
       />
       <DeleteForm
+        id={id}
         openDeleteDialog={openDeleteDialog}
         setOpenDeleteDialog={setOpenDeleteDialog}
       />

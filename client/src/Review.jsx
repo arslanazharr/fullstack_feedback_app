@@ -1,10 +1,11 @@
 /* eslint-disable react-refresh/only-export-components */
 /* eslint-disable no-unused-vars */
 import "@smastrom/react-rating/style.css";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { ThemeProvider, createTheme } from "@mui/material";
 import ReviewList from "./ReviewList";
 import Form from "./Form";
+import axios from "axios";
 
 const theme = createTheme({
   palette: {
@@ -22,14 +23,25 @@ const Review = () => {
   const [movieReview, setMovieReview] = useState("");
   const [feedbackList, setFeedbackList] = useState([]);
 
+  useEffect(() => {
+    axios.get("http://localhost:3001/api/get").then((res) => {
+      const data = res?.data;
+      setFeedbackList(data);
+    });
+  }, []);
+
   const submitReview = () => {
     const obj = {
       movieName: movieName,
       movieReview: movieReview,
       movieRating: movieRating,
     };
-    setFeedbackList((prev) => [...prev, obj]);
-    console.log(feedbackList);
+
+    axios.post("http://localhost:3001/api/add", obj).then((res) => {
+      console.log("response", res?.data);
+      const data = res?.data;
+      setFeedbackList((prev) => [...feedbackList, data]);
+    });
   };
 
   const check =
@@ -61,16 +73,23 @@ const Review = () => {
                 <Form />
               </div>
             </div>
-            <div className="grid grid-cols-12 gap-4 my-10">
-              {feedbackList.map((obj, index) => (
-                <ReviewList
-                  key={index}
-                  movieName={obj.movieName}
-                  movieRating={obj.movieRating}
-                  movieReview={obj.movieReview}
-                />
-              ))}
-            </div>
+            {feedbackList?.length > 0 ? (
+              <div className="grid grid-cols-12 gap-4 my-10">
+                {feedbackList?.map((obj, index) => (
+                  <ReviewList
+                    key={obj?.id}
+                    id={obj?.id}
+                    movieName={obj?.movieName}
+                    movieRating={obj?.movieRating}
+                    movieReview={obj?.movieReview}
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className="flex justify-center w-full p-20">
+                <h1 className="text-3xl">No Reviews Found</h1>
+              </div>
+            )}
           </div>
         </ThemeProvider>
       </feedbackContext.Provider>
