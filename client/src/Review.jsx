@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-refresh/only-export-components */
 /* eslint-disable no-unused-vars */
 import "@smastrom/react-rating/style.css";
@@ -5,7 +6,9 @@ import { createContext, useEffect, useState } from "react";
 import { ThemeProvider, createTheme } from "@mui/material";
 import ReviewList from "./ReviewList";
 import Form from "./Form";
-import axios from "axios";
+import { fetchReviews } from "../redux/fetchSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { postReview } from "../redux/postSlice";
 
 const theme = createTheme({
   palette: {
@@ -22,32 +25,19 @@ const Review = () => {
   const [movieName, setMovieName] = useState("");
   const [movieReview, setMovieReview] = useState("");
   const [feedbackList, setFeedbackList] = useState([]);
+  const [openEditDialog, setOpenEditDialog] = useState(false);
+  const [clickedReview, setClickedReview] = useState("");
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state);
+  const reviews = state.reviews;
 
   useEffect(() => {
-    axios.get("http://localhost:3001/api/get").then((res) => {
-      const data = res?.data;
-      setFeedbackList(data);
-    });
+    dispatch(fetchReviews());
   }, []);
 
-  const submitReview = () => {
-    const obj = {
-      movieName: movieName,
-      movieReview: movieReview,
-      movieRating: movieRating,
-    };
-
-    axios.post("http://localhost:3001/api/add", obj).then((res) => {
-      console.log("response", res?.data);
-      const data = res?.data;
-      setFeedbackList((prev) => [...feedbackList, data]);
-    });
-  };
-
-  const check =
-    movieName?.length > 0 &&
-    movieRating?.toString().length > 0 &&
-    movieReview?.length > 0;
+  useEffect(() => {
+    setFeedbackList(reviews.data);
+  }, [reviews.data]);
 
   return (
     <>
@@ -57,10 +47,13 @@ const Review = () => {
           setMovieReview,
           movieRating,
           setMovieRating,
-          submitReview,
-          check,
+          openEditDialog,
+          setOpenEditDialog,
           movieName,
           movieReview,
+          feedbackList,
+          setClickedReview,
+          clickedReview,
         }}
       >
         <ThemeProvider theme={theme}>

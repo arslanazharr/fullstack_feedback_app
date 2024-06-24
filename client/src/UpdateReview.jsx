@@ -4,13 +4,16 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import Form from "./Form";
 import CloseIcon from "@mui/icons-material/Close";
+import { useCallback } from "react";
 
 export default function UpdateReview(props) {
-  const { openEditDialog, setOpenEditDialog } = props;
+  const { openEditDialog, setOpenEditDialog, id } = props;
 
-  const handleClose = () => {
+  // console.log(">>>", id);
+
+  const handleClose = useCallback(() => {
     setOpenEditDialog(false);
-  };
+  }, [setOpenEditDialog]);
 
   return (
     <>
@@ -25,7 +28,7 @@ export default function UpdateReview(props) {
           </div>
         </DialogTitle>
         <DialogContent>
-          <Form />
+          <Form mode="edit" id={id} />
         </DialogContent>
       </Dialog>
     </>

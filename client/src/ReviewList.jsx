@@ -6,25 +6,31 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import CreateIcon from "@mui/icons-material/Create";
 import Button from "@mui/material/Button";
 import Popover from "@mui/material/Popover";
-import { useState } from "react";
+import { useCallback, useContext, useState } from "react";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import UpdateReview from "./UpdateReview";
 import DeleteForm from "./DeleteForm";
+import { feedbackContext } from "./Review";
 const ReviewList = (props) => {
   const { movieName, movieReview, movieRating, id } = props;
   const [openActiionButtons, setOpenActiionButtons] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [openEditDialog, setOpenEditDialog] = useState(false);
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
-  const handleOpenActionButtons = (event) => {
+  const { openEditDialog, setOpenEditDialog, setClickedReview } =
+    useContext(feedbackContext);
+  const handleOpenActionButtons = useCallback((event) => {
     setAnchorEl(event.currentTarget);
     setOpenActiionButtons(true);
-  };
+    setClickedReview(id);
+  }, []);
 
-  const handleCloseActionButtons = () => {
+  const handleCloseActionButtons = useCallback(() => {
     setOpenActiionButtons(false);
     setAnchorEl(null);
-  };
+  }, []);
+
+  // console.log("id", id);
+
   return (
     <div className="xl:col-span-3 lg:col-span-4 md:col-span-6 sm:col-span-6 col-span-12 border border-[#c002c0] rounded-lg min-h-[100px] p-4 shadow-xl relative">
       <MoreHorizIcon
@@ -86,6 +92,7 @@ const ReviewList = (props) => {
       <UpdateReview
         setOpenEditDialog={setOpenEditDialog}
         openEditDialog={openEditDialog}
+        id={id}
       />
       <DeleteForm
         id={id}

@@ -41,8 +41,27 @@ const deleteMovieReview = (req, res) => {
   });
 };
 
+const updateMovieReview = (req, res) => {
+  const { movieName, movieReview, movieRating } = req.body;
+  const reviewId = req.params.id;
+  const sqlInsert =
+    "UPDATE movie_reviews SET movieName = ?, movieReview = ?, movieRating = ? WHERE id = ?";
+  db.query(
+    sqlInsert,
+    [movieName, movieReview, movieRating, reviewId],
+    (err, result) => {
+      if (err) {
+        res.status(500).json({ message: "Failed to update movie review" });
+      } else {
+        res.status(200).json({ message: "Movie review update successfully" });
+      }
+    }
+  );
+};
+
 module.exports = {
   addMovieReview,
   getMovieReviews,
   deleteMovieReview,
+  updateMovieReview,
 };
