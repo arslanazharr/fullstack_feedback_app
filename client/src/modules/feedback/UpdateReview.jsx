@@ -9,8 +9,6 @@ import { useCallback } from "react";
 export default function UpdateReview(props) {
   const { openEditDialog, setOpenEditDialog, id } = props;
 
-  // console.log(">>>", id);
-
   const handleClose = useCallback(() => {
     setOpenEditDialog(false);
   }, [setOpenEditDialog]);

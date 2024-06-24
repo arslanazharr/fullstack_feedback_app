@@ -7,31 +7,31 @@ import {
 import axios from "axios";
 
 // Action
-export const postReview = createAsyncThunk("postReview", async (obj) => {
-  const response = await axios.post("http://localhost:3001/api/add", obj);
+export const signup = createAsyncThunk("signup", async (obj) => {
+  const response = await axios.post("http://localhost:3001/api/signup", obj);
   return response.data;
 });
 
-const fetchSlice = createSlice({
-  name: "postReview",
+const signupSlice = createSlice({
+  name: "signup",
   initialState: {
     isLoading: false,
     data: null,
     isError: false,
   },
   extraReducers: (builder) => {
-    builder.addCase(postReview.pending, (state, action) => {
+    builder.addCase(signup.pending, (state, action) => {
       state.isLoading = true;
     });
-    builder.addCase(postReview.fulfilled, (state, action) => {
+    builder.addCase(signup.fulfilled, (state, action) => {
       state.isLoading = false;
       state.data = action.payload;
     });
-    builder.addCase(postReview.rejected, (state, action) => {
+    builder.addCase(signup.rejected, (state, action) => {
       console.log("Error", action.payload);
       state.isError = true;
     });
   },
 });
 
-export default fetchSlice.reducer;
+export default signupSlice.reducer;

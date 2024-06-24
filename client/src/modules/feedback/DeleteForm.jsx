@@ -4,8 +4,8 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import Button from "@mui/material/Button";
 import { useDispatch } from "react-redux";
-import { deleteReview } from "../redux/deleteSlice";
-import { fetchReviews } from "../redux/fetchSlice";
+import { deleteReview } from "../../redux/feedback/deleteSlice";
+import { fetchReviews } from "../../redux/feedback/fetchSlice";
 
 const DeleteForm = (props) => {
   const { openDeleteDialog, setOpenDeleteDialog, id } = props;

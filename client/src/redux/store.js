@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import reviews from "./fetchSlice";
+import reviews from "./feedback/fetchSlice";
 
 export const store = configureStore({
   reducer: {

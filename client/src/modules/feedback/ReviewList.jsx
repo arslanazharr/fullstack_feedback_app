@@ -11,6 +11,7 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import UpdateReview from "./UpdateReview";
 import DeleteForm from "./DeleteForm";
 import { feedbackContext } from "./Review";
+
 const ReviewList = (props) => {
   const { movieName, movieReview, movieRating, id } = props;
   const [openActiionButtons, setOpenActiionButtons] = useState(false);
@@ -28,8 +29,6 @@ const ReviewList = (props) => {
     setOpenActiionButtons(false);
     setAnchorEl(null);
   }, []);
-
-  // console.log("id", id);
 
   return (
     <div className="xl:col-span-3 lg:col-span-4 md:col-span-6 sm:col-span-6 col-span-12 border border-[#c002c0] rounded-lg min-h-[100px] p-4 shadow-xl relative">

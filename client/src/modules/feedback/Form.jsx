@@ -8,9 +8,9 @@ import { top100Films } from "./constants";
 import { useCallback, useContext, useEffect, useState } from "react";
 import { feedbackContext } from "./Review";
 import { useDispatch } from "react-redux";
-import { updateReview } from "../redux/updateSlice";
-import { fetchReviews } from "../redux/fetchSlice";
-import { postReview } from "../redux/postSlice";
+import { updateReview } from "../../redux/feedback/updateSlice";
+import { fetchReviews } from "../../redux/feedback/fetchSlice";
+import { postReview } from "../../redux/feedback/postSlice";
 
 const Form = (props) => {
   const [editedRating, setEditedRating] = useState();
