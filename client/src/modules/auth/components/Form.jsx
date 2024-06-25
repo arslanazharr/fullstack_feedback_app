@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { signup } from "../../../redux/auth/signupSlice";
 import { signin } from "../../../redux/auth/signinSlice";
+import { useNavigate } from "react-router-dom";
 
 const Form = (props) => {
   const [firstName, setFirstName] = useState("");
@@ -12,6 +13,7 @@ const Form = (props) => {
   const [password, setPassword] = useState("");
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSubmit = async () => {
     let obj;
@@ -24,11 +26,28 @@ const Form = (props) => {
           email: email,
           password: password,
         };
-        await dispatch(signup(obj));
+
+        await dispatch(signup(obj)).then((res) => {
+          const { userId, firstName, lastName } = res.payload;
+          window.localStorage.setItem("userId", userId);
+          window.localStorage.setItem("userName", `${firstName} ${lastName}`);
+
+          if (userId) {
+            navigate("/");
+          }
+        });
       } else {
-        // eslint-disable-next-line no-unused-vars
         obj = { email: email, password: password };
-        await dispatch(signin(obj));
+
+        await dispatch(signin(obj)).then((res) => {
+          const { userId, firstName, lastName } = res.payload;
+          window.localStorage.setItem("userId", userId);
+          window.localStorage.setItem("userName", `${firstName} ${lastName}`);
+
+          if (userId) {
+            navigate("/");
+          }
+        });
       }
     } catch (error) {
       console.log(error);
@@ -47,7 +66,6 @@ const Form = (props) => {
               type="text"
               onChange={(e) => setFirstName(e.target.value)}
               color="primary"
-              // defaultValue={props.mode === "edit" ? feedback.movieReview : ""}
             />
             <TextField
               label="Last Name"
@@ -56,7 +74,6 @@ const Form = (props) => {
               type="text"
               onChange={(e) => setLastName(e.target.value)}
               color="primary"
-              // defaultValue={props.mode === "edit" ? feedback.movieReview : ""}
             />
           </>
         )}
@@ -67,7 +84,6 @@ const Form = (props) => {
           onChange={(e) => setEmail(e.target.value)}
           color="primary"
           type="email"
-          // defaultValue={props.mode === "edit" ? feedback.movieReview : ""}
         />
         <TextField
           label="Password"
@@ -76,7 +92,6 @@ const Form = (props) => {
           onChange={(e) => setPassword(e.target.value)}
           color="primary"
           type="password"
-          // defaultValue={props.mode === "edit" ? feedback.movieReview : ""}
         />
         <Button
           variant="outlined"

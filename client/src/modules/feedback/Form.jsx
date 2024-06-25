@@ -32,8 +32,6 @@ const Form = (props) => {
 
   const feedback = findFeedbackById(clickedReview);
 
-  console.log("feedback", feedback);
-
   const handleMovieNameChange = useCallback(
     (event, newValue) => {
       setMovieName(newValue);

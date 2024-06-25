@@ -5,6 +5,7 @@ import Signup from "./modules/auth/Signup";
 import Review from "./modules/feedback/Review";
 import { Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@emotion/react";
+import PrivateRoutes from "./utils/PrivateRoutes";
 
 const theme = createTheme({
   palette: {
@@ -22,7 +23,9 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/" element={<Review />} />
+          <Route element={<PrivateRoutes />}>
+            <Route path="/" element={<Review />} />
+          </Route>
         </Routes>
       </ThemeProvider>
     </>

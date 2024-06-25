@@ -10,12 +10,14 @@ const signIn = (req, res) => {
       return;
     }
 
+    if (email.length === 0 || password.length === 0) {
+      res.status(400).json({ message: "Enter email and password" });
+    }
+
     if (result.length === 0) {
       res.status(400).json({ message: "Incorrect email or password" });
     } else {
       const user = result[0];
-
-      console.log("user", user);
       res.status(200).json({
         userId: user.userId,
         firstName: user.firstName,
@@ -41,7 +43,6 @@ const signUp = (req, res) => {
         sqlInsert,
         [firstName, lastName, email, password],
         (err, result) => {
-          console.log("result", result);
           if (err) {
             res.status(500).json({ message: "Failed to create an account" });
           } else {
