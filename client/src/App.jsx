@@ -6,6 +6,8 @@ import Review from "./modules/feedback/Review";
 import { Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@emotion/react";
 import PrivateRoutes from "./utils/PrivateRoutes";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const theme = createTheme({
   palette: {
@@ -19,6 +21,7 @@ function App() {
   return (
     <>
       <ThemeProvider theme={theme}>
+        <ToastContainer />
         <Header />
         <Routes>
           <Route path="/login" element={<Login />} />

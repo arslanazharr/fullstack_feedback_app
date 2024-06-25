@@ -1,15 +1,19 @@
 /* eslint-disable no-unused-vars */
-import {
-  createSlice,
-  createAsyncThunk,
-  createEntityAdapter,
-} from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { toast } from "react-toastify";
+
+// eslint-disable-next-line no-undef
+const BASE_URL = process.env.BASE_URL;
 
 // Action
 export const fetchReviews = createAsyncThunk("fetchReviews", async () => {
-  const response = await axios.get("http://localhost:3001/api/get");
-  return response.data;
+  try {
+    const response = await axios.get(`${BASE_URL}/get`);
+    return response.data;
+  } catch (error) {
+    toast.error(error.response.data.message);
+  }
 });
 
 const fetchSlice = createSlice({

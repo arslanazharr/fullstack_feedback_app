@@ -1,15 +1,20 @@
 /* eslint-disable no-unused-vars */
-import {
-  createSlice,
-  createAsyncThunk,
-  createEntityAdapter,
-} from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { toast } from "react-toastify";
+
+// eslint-disable-next-line no-undef
+const BASE_URL = process.env.BASE_URL;
 
 // Action
 export const signup = createAsyncThunk("signup", async (obj) => {
-  const response = await axios.post("http://localhost:3001/api/signup", obj);
-  return response.data;
+  try {
+    const response = await axios.post(`${BASE_URL}/signup`, obj);
+    toast.success("Signup Successful!");
+    return response.data;
+  } catch (error) {
+    toast.error(error.response.data.message);
+  }
 });
 
 const signupSlice = createSlice({

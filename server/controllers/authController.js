@@ -33,7 +33,20 @@ const signUp = (req, res) => {
 
   const userExists = "SELECT * FROM user_auth WHERE email = ?";
   db.query(userExists, [email], (err, response) => {
-    // Check if response has any rows
+    if (err) {
+      res.status(500).json({ message: "Internal Server Error" });
+      return;
+    }
+
+    if (
+      email.length === 0 ||
+      password.length === 0 ||
+      firstName.length === 0 ||
+      lastName.length === 0
+    ) {
+      res.status(400).json({ message: "All fields are required" });
+    }
+
     if (response.length > 0) {
       res.status(400).json({ message: "User already exists" });
     } else {

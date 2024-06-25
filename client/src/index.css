@@ -17,3 +17,7 @@
 .rr--off .rr--svg {
   fill: #e9d5ff;
 }
+
+body {
+  background-image: url("./assets/bg.svg");
+}

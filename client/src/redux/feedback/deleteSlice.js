@@ -1,15 +1,20 @@
 /* eslint-disable no-unused-vars */
-import {
-  createSlice,
-  createAsyncThunk,
-  createEntityAdapter,
-} from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { toast } from "react-toastify";
+
+// eslint-disable-next-line no-undef
+const BASE_URL = process.env.BASE_URL;
 
 // Action
 export const deleteReview = createAsyncThunk("deleteReview", async (id) => {
-  const response = await axios.delete(`http://localhost:3001/api/delete/${id}`);
-  return response.data;
+  try {
+    const response = await axios.delete(`${BASE_URL}/delete/${id}`);
+    toast.success("Feedback Removed!");
+    return response.data;
+  } catch (error) {
+    toast.error(error.response.data.message);
+  }
 });
 
 const deleteSlice = createSlice({

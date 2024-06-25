@@ -5,6 +5,7 @@ import Popover from "@mui/material/Popover";
 import { useCallback, useState } from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Header = () => {
   const [openActiionButtons, setOpenActiionButtons] = useState(false);
@@ -27,6 +28,7 @@ const Header = () => {
   const handleSignout = useCallback(() => {
     window.localStorage.removeItem("userId");
     window.localStorage.removeItem("userName");
+    toast.success("Signed out Successfully!");
     navigate("/login");
   }, [userId]);
 
@@ -80,37 +82,39 @@ const Header = () => {
               className="!text-[#e9d5ff] cursor-pointer"
               onClick={handleOpenActionButtons}
             >
-              {userName.slice(0, 1)}
+              {userName.slice(0, 1).toUpperCase()}
             </Avatar>
-            <Popover
-              open={openActiionButtons}
-              anchorEl={anchorEl}
-              onClose={handleCloseActionButtons}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "right",
-              }}
-              sx={{
-                "& .MuiPopover-paper": {
-                  padding: 1,
-                },
-              }}
-            >
-              <div className="flex flex-col gap-2 justify-center items-center">
-                <h1 className="font-semibold">{userName}</h1>
-                <Button
-                  className=""
-                  variant="contained"
-                  color="primary"
-                  onClick={() => {
-                    handleSignout();
-                    setOpenActiionButtons(false);
-                  }}
-                >
-                  Sign out
-                </Button>
-              </div>
-            </Popover>
+            {!minScreenSize && (
+              <Popover
+                open={openActiionButtons}
+                anchorEl={anchorEl}
+                onClose={handleCloseActionButtons}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "right",
+                }}
+                sx={{
+                  "& .MuiPopover-paper": {
+                    padding: 1,
+                  },
+                }}
+              >
+                <div className="flex flex-col gap-2 justify-center items-center">
+                  <h1 className="font-semibold">{userName}</h1>
+                  <Button
+                    className=""
+                    variant="contained"
+                    color="primary"
+                    onClick={() => {
+                      handleSignout();
+                      setOpenActiionButtons(false);
+                    }}
+                  >
+                    Sign out
+                  </Button>
+                </div>
+              </Popover>
+            )}
           </>
         )}
       </div>
