@@ -40,5 +40,10 @@ https://github.com/arslanazharr/fullstack_feedback_app/assets/109919686/c0d83f4d
 
 https://github.com/arslanazharr/fullstack_feedback_app/assets/109919686/d92892cf-7a27-41bf-a59f-683b83a98632
 </div>
+<div>
+<h2 align="center">Mobile View</h2>
+  
+https://github.com/arslanazharr/fullstack_feedback_app/assets/109919686/f4024394-450e-4da7-89e7-3e5d1bec5925
+</div>
 
 
