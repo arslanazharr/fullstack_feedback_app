@@ -82,7 +82,7 @@ const Header = () => {
               className="!text-[#e9d5ff] cursor-pointer"
               onClick={handleOpenActionButtons}
             >
-              {userName.slice(0, 1).toUpperCase()}
+              {userName?.slice(0, 1).toUpperCase()}
             </Avatar>
             {!minScreenSize && (
               <Popover

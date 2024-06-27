@@ -2,12 +2,14 @@
 /* eslint-disable react-refresh/only-export-components */
 /* eslint-disable no-unused-vars */
 import "@smastrom/react-rating/style.css";
-import { createContext, useEffect, useState } from "react";
+import { createContext, useCallback, useEffect, useState } from "react";
 import { ThemeProvider, createTheme } from "@mui/material";
 import ReviewList from "./ReviewList";
 import Form from "./Form";
 import { fetchReviews } from "../../redux/feedback/fetchSlice";
 import { useDispatch, useSelector } from "react-redux";
+import UpdateReview from "./UpdateReview";
+import DeleteForm from "./DeleteForm";
 
 export const feedbackContext = createContext(null);
 
@@ -18,6 +20,9 @@ const Review = () => {
   const [feedbackList, setFeedbackList] = useState([]);
   const [openEditDialog, setOpenEditDialog] = useState(false);
   const [clickedReview, setClickedReview] = useState("");
+  const [openActiionButtons, setOpenActiionButtons] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
   const reviews = state.reviews;
@@ -45,6 +50,12 @@ const Review = () => {
           feedbackList,
           setClickedReview,
           clickedReview,
+          openActiionButtons,
+          setOpenDeleteDialog,
+          setOpenActiionButtons,
+          anchorEl,
+          setAnchorEl,
+          openDeleteDialog,
         }}
       >
         <div className="p-4">
@@ -74,6 +85,21 @@ const Review = () => {
             </div>
           )}
         </div>
+
+        {
+          <>
+            <UpdateReview
+              setOpenEditDialog={setOpenEditDialog}
+              openEditDialog={openEditDialog}
+              id={clickedReview}
+            />
+            <DeleteForm
+              id={clickedReview}
+              openDeleteDialog={openDeleteDialog}
+              setOpenDeleteDialog={setOpenDeleteDialog}
+            />
+          </>
+        }
       </feedbackContext.Provider>
     </>
   );

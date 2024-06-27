@@ -6,19 +6,22 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import CreateIcon from "@mui/icons-material/Create";
 import Button from "@mui/material/Button";
 import Popover from "@mui/material/Popover";
-import { useCallback, useContext, useState } from "react";
+import { useCallback, useContext } from "react";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import UpdateReview from "./UpdateReview";
-import DeleteForm from "./DeleteForm";
 import { feedbackContext } from "./Review";
 
 const ReviewList = (props) => {
   const { movieName, movieReview, movieRating, id } = props;
-  const [openActiionButtons, setOpenActiionButtons] = useState(false);
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
-  const { openEditDialog, setOpenEditDialog, setClickedReview } =
-    useContext(feedbackContext);
+  const {
+    setOpenEditDialog,
+    setClickedReview,
+    openActiionButtons,
+    setOpenActiionButtons,
+    anchorEl,
+    setAnchorEl,
+    setOpenDeleteDialog,
+  } = useContext(feedbackContext);
+
   const handleOpenActionButtons = useCallback((event) => {
     setAnchorEl(event.currentTarget);
     setOpenActiionButtons(true);
@@ -87,17 +90,6 @@ const ReviewList = (props) => {
         </div>
         <p className="break-words whitespace-pre-wrap">{movieReview}</p>
       </div>
-
-      <UpdateReview
-        setOpenEditDialog={setOpenEditDialog}
-        openEditDialog={openEditDialog}
-        id={id}
-      />
-      <DeleteForm
-        id={id}
-        openDeleteDialog={openDeleteDialog}
-        setOpenDeleteDialog={setOpenDeleteDialog}
-      />
     </div>
   );
 };
